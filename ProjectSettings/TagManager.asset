@@ -8,6 +8,7 @@ TagManager:
   - p1
   - p2
   - upgrade
+  - boat
   layers:
   - Default
   - TransparentFX

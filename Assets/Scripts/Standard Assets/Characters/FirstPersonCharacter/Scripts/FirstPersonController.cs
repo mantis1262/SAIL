@@ -10,6 +10,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
     [RequireComponent(typeof (AudioSource))]
     public class FirstPersonController : MonoBehaviour
     {
+        [SerializeField] private GameObject boat;
         [SerializeField] private bool m_IsWalking;
         [SerializeField] private float m_WalkSpeed;
         [SerializeField] private float m_RunSpeed;
@@ -41,11 +42,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private bool m_Fire1;
+        private bool m_Boating;
         private AudioSource m_AudioSource;
 
         // Use this for initialization
         private void Start()
         {
+            m_Boating = false;
             m_CharacterController = GetComponent<CharacterController>();
             m_Camera = Camera.main;
             m_OriginalCameraPosition = m_Camera.transform.localPosition;
@@ -65,7 +68,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             RotateView();
             // the jump state needs to read here to make sure it is not missed
-            if (!m_Jump)
+            if (!m_Jump && !m_Boating)
             {
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
             }
@@ -138,6 +141,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             UpdateCameraPosition(speed);
 
             m_MouseLook.UpdateCursorLock();
+
+            if (m_Boating)
+            {
+                boat.transform.position = new Vector3(this.transform.position.x, boat.transform.position.y, this.transform.position.z);
+
+            }
         }
 
 
@@ -291,6 +300,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     else
                     {
                         other.GetComponent<Building>().helpBuy.gameObject.SetActive(false);
+                    }
+                    break;
+                case "boat":
+                    if(m_Fire1)
+                    {
+                        m_Boating = !m_Boating;
                     }
                     break;
             }
