@@ -9,6 +9,7 @@ TagManager:
   - p2
   - upgrade
   - boat
+  - landColider
   layers:
   - Default
   - TransparentFX

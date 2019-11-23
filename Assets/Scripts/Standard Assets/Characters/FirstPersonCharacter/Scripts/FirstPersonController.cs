@@ -144,7 +144,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             if (m_Boating)
             {
-                boat.transform.position = new Vector3(this.transform.position.x, boat.transform.position.y, this.transform.position.z);
 
             }
         }
@@ -306,6 +305,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     if(m_Fire1)
                     {
                         m_Boating = !m_Boating;
+                        Debug.Log(boat.transform.parent) ;
+                        if (boat.transform.parent == null)
+                            boat.transform.SetParent(this.transform);
+                        else
+                            boat.transform.SetParent(null);
+                        m_Fire1 = false;
                     }
                     break;
             }
