@@ -10,6 +10,9 @@ TagManager:
   - upgrade
   - boat
   - landColider
+  - glass
+  - paper
+  - plastic
   layers:
   - Default
   - TransparentFX

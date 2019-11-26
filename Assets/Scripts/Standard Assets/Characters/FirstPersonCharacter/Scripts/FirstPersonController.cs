@@ -281,6 +281,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
                         other.GetComponent<Building>().helpBuy.gameObject.SetActive(true);
                     }
                     break;
+                case "plastic":
+                    Debug.Log("plastic");
+                    break;
             }
         }
         private void OnTriggerStay(Collider other)
@@ -310,6 +313,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
                             boat.transform.SetParent(this.transform);
                         else
                             boat.transform.SetParent(null);
+                        m_Fire1 = false;
+                    }
+                    break;
+                case "plastic":
+                    if (m_Fire1)
+                    {
+                        other.gameObject.SetActive(false);
+                        Resoucres.plasticValue++;
                         m_Fire1 = false;
                     }
                     break;

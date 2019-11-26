@@ -7,10 +7,16 @@ public class Resoucres : MonoBehaviour
 {
 
     [SerializeField] public static int grant;
+    public static int glassValue;
+    public static int paperValue;
+    public static int plasticValue;
     [SerializeField] private Text grantValue; 
     void Start()
     {
-        grant = 2; 
+        grant = 2;
+        glassValue = 0;
+        paperValue = 0;
+        plasticValue = 0;
     }
 
     private void Update()
