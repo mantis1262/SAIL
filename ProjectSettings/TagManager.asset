@@ -13,6 +13,9 @@ TagManager:
   - glass
   - paper
   - plastic
+  - papperBin
+  - plasticBin
+  - glassBin
   layers:
   - Default
   - TransparentFX

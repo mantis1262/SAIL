@@ -281,9 +281,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
                         other.GetComponent<Building>().helpBuy.gameObject.SetActive(true);
                     }
                     break;
-                case "plastic":
-                    Debug.Log("plastic");
-                    break;
             }
         }
         private void OnTriggerStay(Collider other)
@@ -317,13 +314,54 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     }
                     break;
                 case "plastic":
-                    if (m_Fire1)
+                    if (m_Fire1 && Resoucres.paperValue == 0 && Resoucres.glassValue == 0 && Resoucres.plasticValue < 5)
                     {
                         other.gameObject.SetActive(false);
                         Resoucres.plasticValue++;
                         m_Fire1 = false;
                     }
                     break;
+
+                case "paper":
+                    if (m_Fire1 && Resoucres.plasticValue == 0 && Resoucres.glassValue == 0 && Resoucres.paperValue < 5)
+                    {
+                        other.gameObject.SetActive(false);
+                        Resoucres.paperValue++;
+                        m_Fire1 = false;
+                    }
+                    break;
+                case "glass":
+                    if (m_Fire1 && Resoucres.plasticValue == 0 && Resoucres.paperValue == 0 && Resoucres.glassValue < 5)
+                    {
+                        other.gameObject.SetActive(false);
+                        Resoucres.glassValue++;
+                        m_Fire1 = false;
+                    }
+                    break;
+               
+                
+                case "glassBin":
+                    if (m_Fire1 && Resoucres.glassValue != 0)
+                    {
+                        Resoucres.glassValue--;
+                        m_Fire1 = false;
+                    }
+                    break;
+                case "papperBin":
+                    if (m_Fire1 && Resoucres.paperValue != 0)
+                    {
+                        Resoucres.paperValue--;
+                        m_Fire1 = false;
+                    }
+                    break;
+                case "plasticBin":
+                    if (m_Fire1 && Resoucres.plasticValue != 0)
+                    {
+                        Resoucres.plasticValue--;
+                        m_Fire1 = false;
+                    }
+                    break;
+
             }
         }
 
