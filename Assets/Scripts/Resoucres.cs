@@ -10,7 +10,9 @@ public class Resoucres : MonoBehaviour
     public static int glassValue;
     public static int paperValue;
     public static int plasticValue;
-    [SerializeField] private Text grantValue; 
+    [SerializeField] private Text grantValue;
+    [SerializeField] private Text textHelpper;
+
     void Start()
     {
         grant = 2;
@@ -22,8 +24,13 @@ public class Resoucres : MonoBehaviour
     private void Update()
     {
         grantValue.text = grant.ToString();
+        if (glassValue != 0)
+            textHelpper.text = "Posiadane szkło: " + glassValue;
+        else if (paperValue != 0)
+            textHelpper.text = "Posiadany papier: " + paperValue;
+        else if (plasticValue != 0)
+            textHelpper.text = "Posiadany plastic: " + plasticValue;
+        else
+            textHelpper.text = "";
     }
-
-
-
 }
