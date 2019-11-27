@@ -2,17 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class Point : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    [SerializeField] public GameObject door;
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        door.SetActive(false);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        //door.SetActive(true);
     }
 }
