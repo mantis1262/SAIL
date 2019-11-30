@@ -43,6 +43,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private bool m_Fire1;
+        private bool m_Fire2;
         private bool m_Boating;
         private AudioSource m_AudioSource;
 
@@ -59,6 +60,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_NextStep = m_StepCycle/2f;
             m_Jumping = false;
             m_Fire1 = false;
+            m_Fire2 = false;
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
         }
@@ -69,7 +71,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             RotateView();
             // the jump state needs to read here to make sure it is not missed
-            if (!m_Jump && !m_Boating)
+            if (!m_Jump)
             {
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
             }
@@ -79,7 +81,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_Fire1 = CrossPlatformInputManager.GetButtonDown("Fire1");
             }
 
-            if (!m_PreviouslyGrounded && m_CharacterController.isGrounded)
+            if (!m_Fire2)
+            {
+                m_Fire2 = CrossPlatformInputManager.GetButtonDown("Fire2");
+            }
+
+            if (!m_PreviouslyGrounded && m_CharacterController.isGrounded && !m_Boating)
             {
                 StartCoroutine(m_JumpBob.DoBobCycle());
                 PlayLandingSound();
@@ -360,6 +367,27 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     {
                         Resoucres.plasticValue--;
                         m_Fire1 = false;
+                    }
+                    break;
+
+                case "NPCL":
+                    if (m_Fire1)
+                    {
+                        Debug.Log("follow");
+
+                        other.GetComponent<NPCL>().isFollow = !other.GetComponent<NPCL>().isFollow;
+                        m_Fire1 = false;
+
+                    }
+                    break;
+
+                case "NPCLCALL":
+                    if (m_Fire2)
+                    {
+                        other.GetComponentInParent<NPCL>().isFollow = !other.GetComponentInParent<NPCL>().isFollow;
+                        Debug.Log("call");
+                        m_Fire2 = false;
+
                     }
                     break;
 

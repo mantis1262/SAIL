@@ -16,6 +16,8 @@ TagManager:
   - papperBin
   - plasticBin
   - glassBin
+  - NPCL
+  - NPCLCALL
   layers:
   - Default
   - TransparentFX

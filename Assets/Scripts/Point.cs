@@ -6,6 +6,8 @@ public class Point : MonoBehaviour
 {
 
     [SerializeField] public GameObject door;
+    [SerializeField] public GameObject PointEnd;
+    
 
     void Start()
     {
@@ -19,11 +21,19 @@ public class Point : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        door.SetActive(false);
+        if(other.gameObject.tag != "NPCLCALL")
+            door.SetActive(false);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag != "NPCLCALL")
+            door.SetActive(false);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        //door.SetActive(true);
+        if (other.gameObject.tag != "NPCLCALL")
+            door.SetActive(true);
     }
 }
