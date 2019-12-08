@@ -65,6 +65,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Fire2 = false;
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
+            m_MouseLook.SetCursorLock(false);
         }
 
 
