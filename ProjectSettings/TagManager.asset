@@ -18,6 +18,7 @@ TagManager:
   - glassBin
   - NPCL
   - NPCLCALL
+  - NPCSchool
   layers:
   - Default
   - TransparentFX

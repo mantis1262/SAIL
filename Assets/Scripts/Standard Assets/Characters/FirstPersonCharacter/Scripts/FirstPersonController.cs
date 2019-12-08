@@ -47,6 +47,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Boating;
         private AudioSource m_AudioSource;
 
+
+
         // Use this for initialization
         private void Start()
         {
@@ -131,7 +133,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_MoveDir.y = -m_StickToGroundForce;
 
-                if (m_Jump)
+                if (m_Jump && !m_Boating)
                 {
                     m_MoveDir.y = m_JumpSpeed;
                     PlayJumpSound();
@@ -149,11 +151,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             UpdateCameraPosition(speed);
 
             m_MouseLook.UpdateCursorLock();
-
-            if (m_Boating)
-            {
-
-            }
         }
 
 
@@ -291,6 +288,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     break;
             }
         }
+
         private void OnTriggerStay(Collider other)
         {
             switch (other.tag)
@@ -376,6 +374,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
                         Debug.Log("follow");
 
                         other.GetComponent<NPCL>().isFollow = !other.GetComponent<NPCL>().isFollow;
+                        if (other.GetComponent<NPCL>().isFollow == true)
+                            other.GetComponentInChildren<SpriteRenderer>().sprite = GameObject.Find("Resoucers").GetComponent<Resoucres>().labNPCStatusSpirtes[1];
+                        else
+                            other.GetComponentInChildren<SpriteRenderer>().sprite = GameObject.Find("Resoucers").GetComponent<Resoucres>().labNPCStatusSpirtes[0];
+
                         m_Fire1 = false;
 
                     }
@@ -385,7 +388,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     if (m_Fire2)
                     {
                         other.GetComponentInParent<NPCL>().isFollow = !other.GetComponentInParent<NPCL>().isFollow;
-                        Debug.Log("call");
+                        if (other.GetComponentInParent<NPCL>().isFollow == true)
+                            other.GetComponentInParent<NPCL>().GetComponentInChildren<SpriteRenderer>().sprite = GameObject.Find("Resoucers").GetComponent<Resoucres>().labNPCStatusSpirtes[1];
+                        else
+                            other.GetComponentInParent<NPCL>().GetComponentInChildren<SpriteRenderer>().sprite = GameObject.Find("Resoucers").GetComponent<Resoucres>().labNPCStatusSpirtes[0];
                         m_Fire2 = false;
 
                     }

@@ -7,11 +7,13 @@ public class Resoucres : MonoBehaviour
 {
 
     [SerializeField] public static int grant;
+    [SerializeField] public List<Sprite> labNPCStatusSpirtes;
     public static int glassValue;
     public static int paperValue;
     public static int plasticValue;
     [SerializeField] private Text grantValue;
     [SerializeField] private Text textHelpper;
+
 
     void Start()
     {
@@ -25,12 +27,27 @@ public class Resoucres : MonoBehaviour
     {
         grantValue.text = grant.ToString();
         if (glassValue != 0)
+        {
+            textHelpper.gameObject.SetActive(true);
             textHelpper.text = "Posiadane szkło: " + glassValue;
+        }
         else if (paperValue != 0)
+        {
+            textHelpper.gameObject.SetActive(true);
             textHelpper.text = "Posiadany papier: " + paperValue;
+
+        }
         else if (plasticValue != 0)
+        {
+            textHelpper.gameObject.SetActive(true);
             textHelpper.text = "Posiadany plastic: " + plasticValue;
+
+        }
         else
+        {
+            textHelpper.gameObject.SetActive(false);
             textHelpper.text = "";
+        }
     }
+    
 }
