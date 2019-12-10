@@ -65,7 +65,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Fire2 = false;
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
-            m_MouseLook.SetCursorLock(false);
+            m_MouseLook.SetCursorLock(true);
         }
 
 
@@ -395,6 +395,22 @@ namespace UnityStandardAssets.Characters.FirstPerson
                             other.GetComponentInParent<NPCL>().GetComponentInChildren<SpriteRenderer>().sprite = GameObject.Find("Resoucers").GetComponent<Resoucres>().labNPCStatusSpirtes[0];
                         m_Fire2 = false;
 
+                    }
+                    break;
+
+                case "NPCSchool":
+                    if (m_Fire1)
+                    {
+                        m_MouseLook.SetCursorLock(false);
+                        GameObject.Find("Resoucers").GetComponent<Resoucres>().schoolBrief.gameObject.SetActive(true);
+                        m_Fire1 = false;
+                    }
+                    break;
+                case "NPCTech":
+                    if (m_Fire1)
+                    {
+                        other.GetComponent<Teching>().startHelpping = true;
+                        m_Fire1 = false;
                     }
                     break;
 

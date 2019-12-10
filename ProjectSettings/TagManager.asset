@@ -19,6 +19,7 @@ TagManager:
   - NPCL
   - NPCLCALL
   - NPCSchool
+  - NPCTech
   layers:
   - Default
   - TransparentFX
