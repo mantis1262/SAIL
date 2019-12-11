@@ -297,7 +297,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 case "upgrade":
                     if (other.GetComponent<Building>().partBuildingList.Count != 0 && Resoucres.grant > 0)
                     {
-                        if (CrossPlatformInputManager.GetButtonDown("Fire1"))
+                        if (m_Fire1)
                         {
                             other.GetComponent<Building>().Buy();
                             m_Fire1 = false;
@@ -309,7 +309,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     }
                     break;
                 case "boat":
-                    if(CrossPlatformInputManager.GetButtonDown("Fire1"))
+                    if(m_Fire1)
                     {
                         m_Boating = !m_Boating;
                         Debug.Log(boat.transform.parent) ;
@@ -370,7 +370,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     break;
 
                 case "NPCL":
-                    if (CrossPlatformInputManager.GetButtonDown("Fire1"))
+                    if (m_Fire1)
                     {
                         Debug.Log("follow");
 
@@ -386,7 +386,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     break;
 
                 case "NPCLCALL":
-                    if (Input.GetButtonDown("Fire2"))
+                    if (m_Fire2)
                     {
                         other.GetComponentInParent<NPCL>().isFollow = !other.GetComponentInParent<NPCL>().isFollow;
                         if (other.GetComponentInParent<NPCL>().isFollow == true)
@@ -401,7 +401,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 case "NPCSchool":
                     SchoolBrief school = GameObject.Find("Resoucers").GetComponent<Resoucres>().schoolBrief;
 
-                    if (Input.GetButtonDown("Fire1") && (school.gameObject.active == false))
+                    if (m_Fire1 && (school.gameObject.active == false))
                     {
                         MouseLook.SetCursorLock(false);
                         school.gameObject.SetActive(true);
@@ -410,7 +410,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     }
                     break;
                 case "NPCTech":
-                    if (Input.GetButtonDown("Fire1") && other.GetComponent<Teching>().startHelpping == false)
+                    if (m_Fire1 && other.GetComponent<Teching>().startHelpping == false)
                     {
                         other.GetComponent<Teching>().startHelpping = true;
                         other.GetComponent<Teching>().Rutine();
