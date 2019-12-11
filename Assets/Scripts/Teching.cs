@@ -6,21 +6,26 @@ public class Teching : MonoBehaviour
 {
 
     [SerializeField] List<GameObject> studentsList;
+    [SerializeField] public Sprite schoolNPCSNeedHelpSrite;
     public bool startHelpping = false;
 
 
-    void Update()
+    public void Rutine()
     {
-        if (startHelpping)
-        {
-            StartCoroutine("randomHelp");
-        }
+
+        StartCoroutine("randomHelp");
     }
 
-     public IEnumerator randomHelp()
+     public IEnumerator randomHelp()    
     {
-        int randomI = Random.Range(0, studentsList.Count - 1);
-        studentsList[randomI].GetComponent<Student>().needHelp = true;
-        yield return new WaitForSeconds(1);
+        do
+        {
+
+            int randomI = Random.Range(0, studentsList.Count);
+            studentsList[randomI].GetComponent<Student>().needHelp = true;
+            studentsList[randomI].GetComponentInChildren<SpriteRenderer>().sprite = schoolNPCSNeedHelpSrite;
+            yield return new WaitForSeconds(3);
+
+        } while (startHelpping);
     }
 }

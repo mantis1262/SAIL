@@ -2,19 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.Characters.FirstPerson;
+
 
 public class SchoolBrief : MonoBehaviour
 {
     [SerializeField] List<string> dzialania; 
-    [SerializeField] List<float> wyniki;
+    [SerializeField] public List<float> wyniki;
     [SerializeField] Text textDzilania;
     [SerializeField] Text Value;
-    private int randomi;
-
-    private void Start()
-    {
-        randomi = Random.Range(0, wyniki.Count - 1);
-    }
+    public int randomi = 0;
 
     public void Update()
     {
@@ -23,7 +20,10 @@ public class SchoolBrief : MonoBehaviour
 
     public void CheckValue()
     {
-       Debug.Log(float.Parse(Value.text));
-       Debug.Log(float.Parse(Value.text) == wyniki[randomi]);
+        if (float.Parse(Value.text) == wyniki[randomi])
+        {
+            GameObject.Find("Resoucers").GetComponent<Resoucres>().schoolBrief.gameObject.SetActive(false);
+            MouseLook.SetCursorLock(false);
+        }
     }
 }

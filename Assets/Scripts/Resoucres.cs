@@ -8,7 +8,6 @@ public class Resoucres : MonoBehaviour
 
     [SerializeField] public static int grant;
     [SerializeField] public List<Sprite> labNPCStatusSpirtes;
-    [SerializeField] public Sprite schoolNPCSNeedHelpSrite;
     [SerializeField] public SchoolBrief schoolBrief;
 
     public static int glassValue;

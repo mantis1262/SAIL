@@ -65,7 +65,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Fire2 = false;
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
-            m_MouseLook.SetCursorLock(true);
+            MouseLook.SetCursorLock(true);
         }
 
 
@@ -297,7 +297,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 case "upgrade":
                     if (other.GetComponent<Building>().partBuildingList.Count != 0 && Resoucres.grant > 0)
                     {
-                        if (m_Fire1)
+                        if (CrossPlatformInputManager.GetButtonDown("Fire1"))
                         {
                             other.GetComponent<Building>().Buy();
                             m_Fire1 = false;
@@ -309,7 +309,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     }
                     break;
                 case "boat":
-                    if(m_Fire1)
+                    if(CrossPlatformInputManager.GetButtonDown("Fire1"))
                     {
                         m_Boating = !m_Boating;
                         Debug.Log(boat.transform.parent) ;
@@ -321,7 +321,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     }
                     break;
                 case "plastic":
-                    if (m_Fire1 && Resoucres.paperValue == 0 && Resoucres.glassValue == 0 && Resoucres.plasticValue < 5)
+                    if (CrossPlatformInputManager.GetButtonDown("Fire1") && Resoucres.paperValue == 0 && Resoucres.glassValue == 0 && Resoucres.plasticValue < 5)
                     {
                         other.gameObject.SetActive(false);
                         Resoucres.plasticValue++;
@@ -330,7 +330,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     break;
 
                 case "paper":
-                    if (m_Fire1 && Resoucres.plasticValue == 0 && Resoucres.glassValue == 0 && Resoucres.paperValue < 5)
+                    if (CrossPlatformInputManager.GetButtonDown("Fire1") && Resoucres.plasticValue == 0 && Resoucres.glassValue == 0 && Resoucres.paperValue < 5)
                     {
                         other.gameObject.SetActive(false);
                         Resoucres.paperValue++;
@@ -338,7 +338,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     }
                     break;
                 case "glass":
-                    if (m_Fire1 && Resoucres.plasticValue == 0 && Resoucres.paperValue == 0 && Resoucres.glassValue < 5)
+                    if (CrossPlatformInputManager.GetButtonDown("Fire1") && Resoucres.plasticValue == 0 && Resoucres.paperValue == 0 && Resoucres.glassValue < 5)
                     {
                         other.gameObject.SetActive(false);
                         Resoucres.glassValue++;
@@ -348,21 +348,21 @@ namespace UnityStandardAssets.Characters.FirstPerson
                
                 
                 case "glassBin":
-                    if (m_Fire1 && Resoucres.glassValue != 0)
+                    if (CrossPlatformInputManager.GetButtonDown("Fire1") && Resoucres.glassValue != 0)
                     {
                         Resoucres.glassValue--;
                         m_Fire1 = false;
                     }
                     break;
                 case "papperBin":
-                    if (m_Fire1 && Resoucres.paperValue != 0)
+                    if (CrossPlatformInputManager.GetButtonDown("Fire1") && Resoucres.paperValue != 0)
                     {
                         Resoucres.paperValue--;
                         m_Fire1 = false;
                     }
                     break;
                 case "plasticBin":
-                    if (m_Fire1 && Resoucres.plasticValue != 0)
+                    if (CrossPlatformInputManager.GetButtonDown("Fire1") && Resoucres.plasticValue != 0)
                     {
                         Resoucres.plasticValue--;
                         m_Fire1 = false;
@@ -370,7 +370,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     break;
 
                 case "NPCL":
-                    if (m_Fire1)
+                    if (CrossPlatformInputManager.GetButtonDown("Fire1"))
                     {
                         Debug.Log("follow");
 
@@ -386,7 +386,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     break;
 
                 case "NPCLCALL":
-                    if (m_Fire2)
+                    if (Input.GetButtonDown("Fire2"))
                     {
                         other.GetComponentInParent<NPCL>().isFollow = !other.GetComponentInParent<NPCL>().isFollow;
                         if (other.GetComponentInParent<NPCL>().isFollow == true)
@@ -399,17 +399,21 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     break;
 
                 case "NPCSchool":
-                    if (m_Fire1)
+                    SchoolBrief school = GameObject.Find("Resoucers").GetComponent<Resoucres>().schoolBrief;
+
+                    if (Input.GetButtonDown("Fire1") && (school.gameObject.active == false))
                     {
-                        m_MouseLook.SetCursorLock(false);
-                        GameObject.Find("Resoucers").GetComponent<Resoucres>().schoolBrief.gameObject.SetActive(true);
+                        MouseLook.SetCursorLock(false);
+                        school.gameObject.SetActive(true);
+                        school.randomi = Random.Range(0, school.wyniki.Count);
                         m_Fire1 = false;
                     }
                     break;
                 case "NPCTech":
-                    if (m_Fire1)
+                    if (Input.GetButtonDown("Fire1") && other.GetComponent<Teching>().startHelpping == false)
                     {
                         other.GetComponent<Teching>().startHelpping = true;
+                        other.GetComponent<Teching>().Rutine();
                         m_Fire1 = false;
                     }
                     break;
