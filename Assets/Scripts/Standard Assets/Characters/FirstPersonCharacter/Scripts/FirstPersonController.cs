@@ -282,9 +282,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
             switch(other.tag)
             {
                 case "upgrade":
-                    if(other.GetComponent<Building>().partBuildingList.Count != 0 && Resoucres.grant > 0)
+                    if(Resoucres.grant > 0)
                     {
-                        other.GetComponent<Building>().helpBuy.gameObject.SetActive(true);
+                        other.GetComponentInParent<Building>().helpBuy.gameObject.SetActive(true);
                     }
                     break;
             }
@@ -295,17 +295,18 @@ namespace UnityStandardAssets.Characters.FirstPerson
             switch (other.tag)
             {
                 case "upgrade":
-                    if (other.GetComponent<Building>().partBuildingList.Count != 0 && Resoucres.grant > 0)
+                    if (Resoucres.grant > 0)
                     {
                         if (m_Fire1)
                         {
-                            other.GetComponent<Building>().Buy();
+                            other.GetComponentInParent<Building>().Buy(other.GetComponent<SignBuild>().Build);
+                            Resoucres.grant = Resoucres.grant - other.GetComponent<SignBuild>().Cost;
+                            other.gameObject.SetActive(false);
                             m_Fire1 = false;
+                            if (other.GetComponent<SignBuild>().ToUnlockBuild != null)
+                                other.GetComponent<SignBuild>().ToUnlockBuild.SetActive(true);
+                            other.GetComponentInParent<Building>().helpBuy.gameObject.SetActive(false);
                         }
-                    }
-                    else
-                    {
-                        other.GetComponent<Building>().helpBuy.gameObject.SetActive(false);
                     }
                     break;
                 case "boat":
@@ -426,7 +427,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             switch (other.tag)
             {
                 case "upgrade":
-                    other.GetComponent<Building>().helpBuy.gameObject.SetActive(false);
+                    other.GetComponentInParent<Building>().helpBuy.gameObject.SetActive(false);
                     break;
             }
         }

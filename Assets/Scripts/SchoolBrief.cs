@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
@@ -20,7 +21,8 @@ public class SchoolBrief : MonoBehaviour
 
     public void CheckValue()
     {
-        if (float.Parse(Value.text) == wyniki[randomi])
+        
+        if (float.Parse(Value.text.Trim('\r', ' '), CultureInfo.InvariantCulture) == wyniki[randomi])
         {
             GameObject.Find("Resoucers").GetComponent<Resoucres>().schoolBrief.gameObject.SetActive(false);
             MouseLook.SetCursorLock(false);

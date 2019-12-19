@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Building : MonoBehaviour
 {
-    [SerializeField] public List<GameObject> partBuildingList;
     [SerializeField] public List<GameObject> awakeBuildingList;
     [SerializeField] public Text helpBuy; 
 
@@ -15,15 +14,10 @@ public class Building : MonoBehaviour
             game.SetActive(true);
     }
 
-    public void Buy()
+    public void Buy(GameObject part)
     {
-        if (partBuildingList.Count != 0)
-        {
-            Resoucres.grant--;
-            partBuildingList[0].SetActive(true);
-            awakeBuildingList.Add(partBuildingList[0]);
-            partBuildingList.RemoveAt(0);
-        }
+            part.SetActive(true);
+            awakeBuildingList.Add(part);
     }
 }
     
