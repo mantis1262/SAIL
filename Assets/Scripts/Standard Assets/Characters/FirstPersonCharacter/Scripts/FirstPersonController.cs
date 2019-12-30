@@ -29,6 +29,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
+        [SerializeField] private GameObject m_Hand;
+
 
         private Camera m_Camera;
         private bool m_Jump;
@@ -322,50 +324,58 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     }
                     break;
                 case "plastic":
-                    if (CrossPlatformInputManager.GetButtonDown("Fire1") && Resoucres.paperValue == 0 && Resoucres.glassValue == 0 && Resoucres.plasticValue < 5)
+                    if (m_Fire1 && m_Hand.transform.childCount == 0)
                     {
-                        other.gameObject.SetActive(false);
-                        Resoucres.plasticValue++;
+                        other.gameObject.transform.SetParent(m_Hand.transform);
+                        other.gameObject.transform.position = m_Hand.transform.position;
                         m_Fire1 = false;
+                        Debug.Log(m_Hand.transform.childCount);
                     }
                     break;
 
                 case "paper":
-                    if (CrossPlatformInputManager.GetButtonDown("Fire1") && Resoucres.plasticValue == 0 && Resoucres.glassValue == 0 && Resoucres.paperValue < 5)
+                    if (CrossPlatformInputManager.GetButtonDown("Fire1") && m_Hand.transform.childCount == 0)
                     {
-                        other.gameObject.SetActive(false);
-                        Resoucres.paperValue++;
+                        other.gameObject.transform.SetParent(m_Hand.transform);
+                        other.gameObject.transform.position = m_Hand.transform.position;
                         m_Fire1 = false;
+                       
                     }
                     break;
                 case "glass":
-                    if (CrossPlatformInputManager.GetButtonDown("Fire1") && Resoucres.plasticValue == 0 && Resoucres.paperValue == 0 && Resoucres.glassValue < 5)
+                    if (CrossPlatformInputManager.GetButtonDown("Fire1") && m_Hand.transform.childCount == 0)
                     {
-                        other.gameObject.SetActive(false);
-                        Resoucres.glassValue++;
+                        other.gameObject.transform.SetParent(m_Hand.transform);
+                        other.gameObject.transform.position = m_Hand.transform.position;
                         m_Fire1 = false;
                     }
                     break;
                
                 
                 case "glassBin":
-                    if (CrossPlatformInputManager.GetButtonDown("Fire1") && Resoucres.glassValue != 0)
+                    if (CrossPlatformInputManager.GetButtonDown("Fire1") && m_Hand.transform.childCount == 1 && m_Hand.transform.GetChild(0).gameObject.tag != "glass")
                     {
-                        Resoucres.glassValue--;
+                        Destroy(m_Hand.transform.GetChild(0).gameObject);
+                        Resoucres.glassValue++;
                         m_Fire1 = false;
                     }
                     break;
                 case "papperBin":
-                    if (CrossPlatformInputManager.GetButtonDown("Fire1") && Resoucres.paperValue != 0)
+                    if (Input.GetButtonDown("Fire1") && m_Hand.transform.childCount == 1 && m_Hand.transform.GetChild(0).gameObject.tag != "paper")
                     {
-                        Resoucres.paperValue--;
+
+                        Destroy(m_Hand.transform.GetChild(0).gameObject);
+                        Resoucres.paperValue++;
                         m_Fire1 = false;
                     }
                     break;
                 case "plasticBin":
-                    if (CrossPlatformInputManager.GetButtonDown("Fire1") && Resoucres.plasticValue != 0)
+                    if (m_Fire1 && m_Hand.transform.childCount == 1 )
                     {
-                        Resoucres.plasticValue--;
+                        Destroy(m_Hand.transform.GetChild(0).gameObject);
+                        Resoucres.plasticValue++;
+                        Debug.Log(Resoucres.plasticValue);
+
                         m_Fire1 = false;
                     }
                     break;

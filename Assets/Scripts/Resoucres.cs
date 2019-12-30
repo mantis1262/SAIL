@@ -28,32 +28,6 @@ public class Resoucres : MonoBehaviour
     private void Update()
     {
         grantValue.text = grant.ToString();
-        if (glassValue != 0)
-        {
-            textHelpper.gameObject.SetActive(true);
-            textHelpper.text = "Posiadane szkło: " + glassValue;
-            textHelpper.color = Color.green;
-        }
-        else if (paperValue != 0)
-        {
-            textHelpper.gameObject.SetActive(true);
-            textHelpper.text = "Posiadany papier: " + paperValue;
-            textHelpper.color = Color.blue;
-
-        }
-        else if (plasticValue != 0)
-        {
-            textHelpper.gameObject.SetActive(true);
-            textHelpper.text = "Posiadany plastik: " + plasticValue;
-            textHelpper.color = Color.yellow;
-
-
-        }
-        else
-        {
-            textHelpper.gameObject.SetActive(false);
-            textHelpper.text = "";
-        }
     }
     
 }
