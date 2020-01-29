@@ -5,7 +5,7 @@ using UnityEngine;
 public class Teching : MonoBehaviour
 {
 
-    [SerializeField] List<GameObject> studentsList;
+    [SerializeField] public List<GameObject> studentsList;
     [SerializeField] public Sprite schoolNPCSNeedHelpSrite;
     public bool startHelpping = false;
 

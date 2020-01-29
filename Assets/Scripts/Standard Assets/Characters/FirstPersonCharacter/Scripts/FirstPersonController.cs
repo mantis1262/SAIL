@@ -1,14 +1,12 @@
-using System;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {
-    [RequireComponent(typeof (CharacterController))]
-    [RequireComponent(typeof (AudioSource))]
+    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(AudioSource))]
     public class FirstPersonController : MonoBehaviour
     {
         [SerializeField] private GameObject boat;
@@ -61,12 +59,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_FovKick.Setup(m_Camera);
             m_HeadBob.Setup(m_Camera, m_StepInterval);
             m_StepCycle = 0f;
-            m_NextStep = m_StepCycle/2f;
+            m_NextStep = m_StepCycle / 2f;
             m_Jumping = false;
             m_Fire1 = false;
             m_Fire2 = false;
             m_AudioSource = GetComponent<AudioSource>();
-			m_MouseLook.Init(transform , m_Camera.transform);
+            m_MouseLook.Init(transform, m_Camera.transform);
             MouseLook.SetCursorLock(true);
         }
 
@@ -120,16 +118,16 @@ namespace UnityStandardAssets.Characters.FirstPerson
             float speed;
             GetInput(out speed);
             // always move along the camera forward as it is the direction that it being aimed at
-            Vector3 desiredMove = transform.forward*m_Input.y + transform.right*m_Input.x;
+            Vector3 desiredMove = transform.forward * m_Input.y + transform.right * m_Input.x;
 
             // get a normal for the surface that is being touched to move along it
             RaycastHit hitInfo;
             Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out hitInfo,
-                               m_CharacterController.height/2f, Physics.AllLayers, QueryTriggerInteraction.Ignore);
+                               m_CharacterController.height / 2f, Physics.AllLayers, QueryTriggerInteraction.Ignore);
             desiredMove = Vector3.ProjectOnPlane(desiredMove, hitInfo.normal).normalized;
 
-            m_MoveDir.x = desiredMove.x*speed;
-            m_MoveDir.z = desiredMove.z*speed;
+            m_MoveDir.x = desiredMove.x * speed;
+            m_MoveDir.z = desiredMove.z * speed;
 
 
             if (m_CharacterController.isGrounded)
@@ -146,9 +144,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             else
             {
-                m_MoveDir += Physics.gravity*m_GravityMultiplier*Time.fixedDeltaTime;
+                m_MoveDir += Physics.gravity * m_GravityMultiplier * Time.fixedDeltaTime;
             }
-            m_CollisionFlags = m_CharacterController.Move(m_MoveDir*Time.fixedDeltaTime);
+            m_CollisionFlags = m_CharacterController.Move(m_MoveDir * Time.fixedDeltaTime);
 
             ProgressStepCycle(speed);
             UpdateCameraPosition(speed);
@@ -168,7 +166,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             if (m_CharacterController.velocity.sqrMagnitude > 0 && (m_Input.x != 0 || m_Input.y != 0))
             {
-                m_StepCycle += (m_CharacterController.velocity.magnitude + (speed*(m_IsWalking ? 1f : m_RunstepLenghten)))*
+                m_StepCycle += (m_CharacterController.velocity.magnitude + (speed * (m_IsWalking ? 1f : m_RunstepLenghten))) *
                              Time.fixedDeltaTime;
             }
 
@@ -211,7 +209,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_Camera.transform.localPosition =
                     m_HeadBob.DoHeadBob(m_CharacterController.velocity.magnitude +
-                                      (speed*(m_IsWalking ? 1f : m_RunstepLenghten)));
+                                      (speed * (m_IsWalking ? 1f : m_RunstepLenghten)));
                 newCameraPosition = m_Camera.transform.localPosition;
                 newCameraPosition.y = m_Camera.transform.localPosition.y - m_JumpBob.Offset();
             }
@@ -259,7 +257,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void RotateView()
         {
-            m_MouseLook.LookRotation (transform, m_Camera.transform);
+            m_MouseLook.LookRotation(transform, m_Camera.transform);
         }
 
 
@@ -276,15 +274,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 return;
             }
-            body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
+            body.AddForceAtPosition(m_CharacterController.velocity * 0.1f, hit.point, ForceMode.Impulse);
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            switch(other.tag)
+            switch (other.tag)
             {
                 case "upgrade":
-                    if(Resoucres.grant > 0)
+                    if (Resoucres.grant > 0)
                     {
                         other.GetComponentInParent<Building>().helpBuy.gameObject.SetActive(true);
                     }
@@ -312,10 +310,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     }
                     break;
                 case "boat":
-                    if(m_Fire1)
+                    if (m_Fire1)
                     {
                         m_Boating = !m_Boating;
-                        Debug.Log(boat.transform.parent) ;
+                        Debug.Log(boat.transform.parent);
                         if (boat.transform.parent == null)
                             boat.transform.SetParent(this.transform);
                         else
@@ -323,37 +321,36 @@ namespace UnityStandardAssets.Characters.FirstPerson
                         m_Fire1 = false;
                     }
                     break;
+               
                 case "plastic":
                     if (m_Fire1 && m_Hand.transform.childCount == 0)
                     {
                         other.gameObject.transform.SetParent(m_Hand.transform);
                         other.gameObject.transform.position = m_Hand.transform.position;
                         m_Fire1 = false;
-                        Debug.Log(m_Hand.transform.childCount);
                     }
                     break;
-
                 case "paper":
-                    if (CrossPlatformInputManager.GetButtonDown("Fire1") && m_Hand.transform.childCount == 0)
+                    if (m_Fire1 && m_Hand.transform.childCount == 0)
                     {
                         other.gameObject.transform.SetParent(m_Hand.transform);
                         other.gameObject.transform.position = m_Hand.transform.position;
                         m_Fire1 = false;
-                       
+
                     }
                     break;
                 case "glass":
-                    if (CrossPlatformInputManager.GetButtonDown("Fire1") && m_Hand.transform.childCount == 0)
+                    if (m_Fire1 && m_Hand.transform.childCount == 0)
                     {
                         other.gameObject.transform.SetParent(m_Hand.transform);
                         other.gameObject.transform.position = m_Hand.transform.position;
                         m_Fire1 = false;
                     }
                     break;
-               
-                
+
+
                 case "glassBin":
-                    if (CrossPlatformInputManager.GetButtonDown("Fire1") && m_Hand.transform.childCount == 1 && m_Hand.transform.GetChild(0).gameObject.tag != "glass")
+                    if (m_Fire1 && m_Hand.transform.childCount == 1 && m_Hand.transform.GetChild(0).gameObject.tag == "glass")
                     {
                         Destroy(m_Hand.transform.GetChild(0).gameObject);
                         Resoucres.glassValue++;
@@ -361,7 +358,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     }
                     break;
                 case "papperBin":
-                    if (Input.GetButtonDown("Fire1") && m_Hand.transform.childCount == 1 && m_Hand.transform.GetChild(0).gameObject.tag != "paper")
+                    if (m_Fire1 && m_Hand.transform.childCount == 1 && m_Hand.transform.GetChild(0).gameObject.tag == "paper")
                     {
 
                         Destroy(m_Hand.transform.GetChild(0).gameObject);
@@ -370,11 +367,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     }
                     break;
                 case "plasticBin":
-                    if (m_Fire1 && m_Hand.transform.childCount == 1 )
+                    if (m_Fire1 && m_Hand.transform.childCount == 1 && m_Hand.transform.GetChild(0).gameObject.tag == "plastic")
                     {
                         Destroy(m_Hand.transform.GetChild(0).gameObject);
                         Resoucres.plasticValue++;
-                        Debug.Log(Resoucres.plasticValue);
 
                         m_Fire1 = false;
                     }
@@ -383,8 +379,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 case "NPCL":
                     if (m_Fire1)
                     {
-                        Debug.Log("follow");
-
                         other.GetComponent<NPCL>().isFollow = !other.GetComponent<NPCL>().isFollow;
                         if (other.GetComponent<NPCL>().isFollow == true)
                             other.GetComponentInChildren<SpriteRenderer>().sprite = GameObject.Find("Resoucers").GetComponent<Resoucres>().labNPCStatusSpirtes[1];
@@ -412,11 +406,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 case "NPCSchool":
                     SchoolBrief school = GameObject.Find("Resoucers").GetComponent<Resoucres>().schoolBrief;
 
-                    if (m_Fire1 && (school.gameObject.active == false))
+                    if (m_Fire1 && other.GetComponent<Student>().needHelp == true && (school.gameObject.active == false))
                     {
-                        MouseLook.SetCursorLock(false);
-                        school.gameObject.SetActive(true);
-                        school.randomi = Random.Range(0, school.wyniki.Count);
+                        school.SetBrief(other.GetComponent<Student>());
                         m_Fire1 = false;
                     }
                     break;

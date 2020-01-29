@@ -19,7 +19,7 @@ public class Resoucres : MonoBehaviour
 
     void Start()
     {
-        grant = 2;
+        grant = 1;
         glassValue = 0;
         paperValue = 0;
         plasticValue = 0;

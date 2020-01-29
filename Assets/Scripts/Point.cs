@@ -5,9 +5,7 @@ using UnityEngine;
 public class Point : MonoBehaviour
 {
 
-    [SerializeField] public GameObject door;
-    [SerializeField] public GameObject PointEnd;
-    
+    [SerializeField] public GameObject door;    
 
     void Start()
     {

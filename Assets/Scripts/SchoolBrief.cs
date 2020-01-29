@@ -8,24 +8,33 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class SchoolBrief : MonoBehaviour
 {
-    [SerializeField] List<string> dzialania; 
+    [SerializeField] public List<string> dzialania;
     [SerializeField] public List<float> wyniki;
-    [SerializeField] Text textDzilania;
+    [SerializeField] public Text textDzilania;
     [SerializeField] Text Value;
     public int randomi = 0;
-
-    public void Update()
-    {
-        textDzilania.text = dzialania[randomi];
-    }
+    public Student stunent;
 
     public void CheckValue()
     {
-        
+
         if (float.Parse(Value.text.Trim('\r', ' '), CultureInfo.InvariantCulture) == wyniki[randomi])
         {
             GameObject.Find("Resoucers").GetComponent<Resoucres>().schoolBrief.gameObject.SetActive(false);
-            MouseLook.SetCursorLock(false);
+            MouseLook.SetCursorLock(true);
+            dzialania.RemoveAt(randomi);
+            wyniki.RemoveAt(randomi);
+            stunent.needHelp = false;
+            stunent.GetComponentInChildren<SpriteRenderer>().sprite = null;
         }
+    }
+
+    public void SetBrief(Student student)
+    {
+        MouseLook.SetCursorLock(false);
+        gameObject.SetActive(true);
+        randomi = Random.Range(0, wyniki.Count);
+        this.stunent = student;
+        textDzilania.text = dzialania[randomi].ToString();
     }
 }
