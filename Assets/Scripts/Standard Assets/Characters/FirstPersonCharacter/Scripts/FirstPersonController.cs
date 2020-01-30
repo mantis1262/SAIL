@@ -354,6 +354,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     {
                         Destroy(m_Hand.transform.GetChild(0).gameObject);
                         Resoucres.glassValue++;
+                        Resoucres.ChcekIfCollectAll();
                         m_Fire1 = false;
                     }
                     break;
@@ -363,6 +364,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
                         Destroy(m_Hand.transform.GetChild(0).gameObject);
                         Resoucres.paperValue++;
+                        Resoucres.ChcekIfCollectAll();
                         m_Fire1 = false;
                     }
                     break;
@@ -371,7 +373,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     {
                         Destroy(m_Hand.transform.GetChild(0).gameObject);
                         Resoucres.plasticValue++;
-
+                        Resoucres.ChcekIfCollectAll();
                         m_Fire1 = false;
                     }
                     break;
@@ -420,7 +422,20 @@ namespace UnityStandardAssets.Characters.FirstPerson
                         m_Fire1 = false;
                     }
                     break;
-
+                case "NPCHelp":
+                    {
+                        if (m_Fire1)
+                        {
+                            if (other.GetComponent<Helper>().textInut.gameObject.active == false)
+                                 other.GetComponent<Helper>().textInut.gameObject.SetActive(true);
+                            else
+                                 other.GetComponent<Helper>().textInut.gameObject.SetActive(false);
+                            
+                            other.GetComponent<Helper>().textInut.text = other.GetComponent<Helper>().textValue;
+                            m_Fire1 = false;
+                        }
+                    }
+                    break;
             }
         }
 
@@ -430,6 +445,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 case "upgrade":
                     other.GetComponentInParent<Building>().helpBuy.gameObject.SetActive(false);
+                    break;
+                case "NPCHelp":
+                    {
+                        other.GetComponent<Helper>().textInut.gameObject.SetActive(false);
+                        m_Fire1 = false;
+                    }
                     break;
             }
         }

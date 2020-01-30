@@ -19,8 +19,11 @@ public class Point : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag != "NPCLCALL")
+        if (other.gameObject.tag != "NPCLCALL")
+        {
             door.SetActive(false);
+            Resoucres.CheckEndPoint();
+        }
     }
 
     private void OnTriggerStay(Collider other)

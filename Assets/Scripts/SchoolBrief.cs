@@ -26,6 +26,7 @@ public class SchoolBrief : MonoBehaviour
             wyniki.RemoveAt(randomi);
             stunent.needHelp = false;
             stunent.GetComponentInChildren<SpriteRenderer>().sprite = null;
+            Resoucres.correctAnserw++;
         }
     }
 

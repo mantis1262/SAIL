@@ -26,6 +26,17 @@ public class Teching : MonoBehaviour
             studentsList[randomI].GetComponentInChildren<SpriteRenderer>().sprite = schoolNPCSNeedHelpSrite;
             yield return new WaitForSeconds(3);
 
+            if (Resoucres.correctAnserw == 5)
+            {
+                startHelpping = false;
+                foreach(GameObject student in studentsList)
+                {
+                    student.GetComponent<Student>().needHelp = false;
+                    student.GetComponentInChildren<SpriteRenderer>().sprite = null;
+                }
+                Resoucres.grant++;
+            }
+
         } while (startHelpping);
     }
 }

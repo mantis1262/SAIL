@@ -21,6 +21,7 @@ TagManager:
   - NPCSchool
   - NPCTech
   - hand
+  - NPCHelp
   layers:
   - Default
   - TransparentFX
