@@ -415,7 +415,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     }
                     break;
                 case "NPCTech":
-                    if (m_Fire1 && other.GetComponent<Teching>().startHelpping == false)
+                    if (m_Fire1 && other.GetComponent<Teching>().startHelpping == false && GameObject.Find("Resoucers").GetComponent<Resoucres>().schoolBrief.dzialania.Count == 7)
                     {
                         other.GetComponent<Teching>().startHelpping = true;
                         other.GetComponent<Teching>().Rutine();
